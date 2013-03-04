@@ -1,0 +1,56 @@
+﻿@model KnockoutTodo.Models.ViewModels.IndexViewModel 
+@{
+    ViewBag.Title = "Index";
+}
+
+@section scripts
+{
+    <script src="~/Scripts/knockout-2.2.0.js"></script>
+    <script src="~/Scripts/main.js"></script>
+    <script type="text/javascript">
+        $(function () {
+            var seed = @(Html.Raw(Model.ToJson(Url)));
+            model = new AppViewModel(seed);
+            ko.applyBindings(model);
+        });
+    </script>
+}
+
+<div style="margin: 0 auto; text-align: center">
+    <div class="input-append">
+        <input class="span6" id="appendedInputButtons" type="text" data-bind="value: newTodo, valueUpdate:'afterkeydown', executeOnEnter:add">
+        <button class="btn btn-primary" data-bind="click: add">
+            <i class="icon-white icon-plus"></i>
+            Add Task
+        </button>
+    </div>
+</div>
+
+<hr />
+
+<div data-bind="foreach: messages">
+    <div class="alert alert-success">
+        <i class="icon-check"></i>
+        <span data-bind="text: text"></span>
+    </div>
+</div>
+
+<div class="alert alert-info" data-bind="visible: noItems">
+    <i class="icon-check"></i>
+    Add Some Tasks To Complete
+</div>
+
+<div data-bind="foreach: items">
+    <div class="row-fluid">
+        <div class="span12">
+            <div class="todo-item">
+                <span data-bind="text: text"></span>
+                <button class="btn btn-success pull-right" data-bind="click: complete">
+                    <i class="icon-white icon-check"></i> 
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
